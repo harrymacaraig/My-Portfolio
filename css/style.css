@@ -737,7 +737,7 @@ a   { color: inherit; }
 .footer-bottom { margin-top: var(--space-lg); }
  
 .huge-logo {
-  font-size: clamp(80px, 15vw, 300px);
+  font-size: clamp(75px, 15vw, 300px);
   font-weight: 600;
   margin: 0;
   margin-left: -40px;
