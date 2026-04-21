@@ -149,15 +149,15 @@ a   { color: inherit; }
 }
 
 .typewriter::after {
-   content: '|';
-   display: inline-block;
-   margin-left: 4px;
-   animation: blink 0.7s step-end infinite;
+ content: '|';
+ display: inline-block;
+ margin-left: 4px;
+ animation: blink 0.7s step-end infinite;
 }
 
 @keyframes blink {
-   0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+ 0%, 100% { opacity: 1; }
+ 50%       { opacity: 0; }
 }
 
 .Sub-header {
@@ -415,6 +415,11 @@ a   { color: inherit; }
   flex-direction: column;
   gap: 15px;
 }
+
+.project-card, .card-container {
+ will-change: transform;
+ transform-style: preserve-3d;
+ }
 
 .project-image-wrapper {
   position: relative;
