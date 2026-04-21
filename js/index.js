@@ -58,36 +58,47 @@ const phrases = [
 const headingEl = document.querySelector('.header');
  
 if (headingEl) {
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
  
-    // Add a blinking cursor via CSS class
+    // -- Lock the container height so nothing jumps --
+    // Temporarily write all phrases to find the tallest one
+    let maxHeight = 0;
+    phrases.forEach(phrase => {
+        headingEl.textContent = phrase;
+        const h = headingEl.offsetHeight;
+        if (h > maxHeight) maxHeight = h;
+    });
+    headingEl.style.minHeight = maxHeight + 'px';
+    headingEl.style.display   = 'block';      // ensures minHeight works
+    headingEl.textContent     = '';           // clear before typing starts
+ 
+    // -- Typewriter logic --
+    let phraseIndex = 0;
+    let charIndex   = 0;
+    let isDeleting  = false;
+ 
     headingEl.classList.add('typewriter');
  
     function type() {
         const currentPhrase = phrases[phraseIndex];
  
         if (isDeleting) {
-            // Remove a character
             headingEl.textContent = currentPhrase.substring(0, charIndex - 1);
             charIndex--;
         } else {
-            // Add a character
             headingEl.textContent = currentPhrase.substring(0, charIndex + 1);
             charIndex++;
         }
  
-        // Typing speed: faster when deleting
-        let speed = isDeleting ? 40 : 80;
+        // Slower speeds (was 40/80 — now 60/120)
+        let speed = isDeleting ? 60 : 120;
  
         if (!isDeleting && charIndex === currentPhrase.length) {
-            speed = 2000;
+            speed      = 3000;   // pause longer at end of phrase (was 2000)
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
+            isDeleting  = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
-            speed = 400;
+            speed       = 600;   // pause before typing next phrase (was 400)
         }
  
         setTimeout(type, speed);
@@ -100,13 +111,11 @@ const tiltCards = document.querySelectorAll('.project-card, .card-container');
  
 tiltCards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
-        const rect   = card.getBoundingClientRect();
-        const x      = e.clientX - rect.left;   // mouse X inside card
-        const y      = e.clientY - rect.top;    // mouse Y inside card
+        const rect    = card.getBoundingClientRect();
+        const x       = e.clientX - rect.left;
+        const y       = e.clientY - rect.top;
         const centerX = rect.width  / 2;
         const centerY = rect.height / 2;
- 
-        // Max tilt angle in degrees
         const maxTilt = 10;
  
         const rotateX = ((y - centerY) / centerY) * -maxTilt;
@@ -116,29 +125,15 @@ tiltCards.forEach(card => {
             `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
     });
  
-    // Reset on mouse leave — smooth spring-back
     card.addEventListener('mouseleave', () => {
         card.style.transition = 'transform 0.5s ease';
         card.style.transform  = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
     });
  
-    // Remove transition during active tilt so it feels snappy
     card.addEventListener('mouseenter', () => {
         card.style.transition = 'transform 0.1s ease';
     });
 });
-
-
-// ── 4. ROTATING BADGE (My Belief section) ─────────────────────────
-const badge = document.querySelector('.badge-icon img');
-
-if (badge) {
-    let angle = 0;
-    setInterval(() => {
-        angle += 0.5;
-        badge.style.transform = `rotate(${angle}deg)`;
-    }, 16); // ~60fps
-}
 
 
 
