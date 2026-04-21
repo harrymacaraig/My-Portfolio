@@ -303,6 +303,7 @@ a   { color: inherit; }
 }
 
 .badge {
+  letter-spacing: .2px;
   position: absolute;
   bottom: -30px;
   right: 200px;
