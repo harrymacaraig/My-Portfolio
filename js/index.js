@@ -36,13 +36,13 @@ const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target); // animate once
+            revealObserver.unobserve(entry.target); 
         }
     });
 }, { threshold: 0.15 });
 
 revealElements.forEach(el => {
-    el.classList.add('reveal'); // add base hidden state
+    el.classList.add('reveal'); 
     revealObserver.observe(el);
 });
 
@@ -82,11 +82,9 @@ if (headingEl) {
         let speed = isDeleting ? 40 : 80;
  
         if (!isDeleting && charIndex === currentPhrase.length) {
-            // Pause at end of phrase before deleting
             speed = 2000;
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
-            // Move to next phrase
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
             speed = 400;
@@ -142,8 +140,6 @@ if (badge) {
     }, 16); // ~60fps
 }
 
-
-// ── 5. CAROUSEL: pause on hover ───────────────────────────────────
 
 
 // ── 6. FOOTER rotating icon ───────────────────────────────────────
