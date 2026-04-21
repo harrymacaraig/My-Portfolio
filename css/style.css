@@ -412,6 +412,7 @@ a   { color: inherit; }
 }
 
 .project-card {
+  text-align: Left;
   display: flex;
   flex-direction: column;
   gap: 15px;
